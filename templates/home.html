@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <h1>Hello</h1>
+</head>
+<body>
+
+</body>
+
+<script>
+  function initFingerprintJS() {
+    FingerprintJS.load().then(fp => {
+      fp.get().then(result => {
+        const visitorId = result.visitorId;
+        const components = result.components;
+        console.log(components)
+        console.log(visitorId);
+        fetch("http://localhost:8080/fingerprint", {
+            method: "POST",
+            body: JSON.stringify({
+                fingerprint: visitorId
+            }),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8",
+                "Access-Control-Allow-Origin": "*"
+            }
+        });
+      });
+    });
+  }
+</script>
+<script
+  async
+  src="https://cdn.jsdelivr.net/npm/@fingerprintjs/fingerprintjs@3/dist/fp.min.js"
+  onload="initFingerprintJS()"
+></script>
+</html>
