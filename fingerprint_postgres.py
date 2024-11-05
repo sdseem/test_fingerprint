@@ -11,13 +11,12 @@ class FingerprintDBConnection:
             print('Can`t establish connection to database')
 
 
-    def save_raw(self, fingerprint):
+    def save_raw(self, fingerprint, components):
         connection = self.get_connection()
         insert_query = """
-        INSERT INTO RAW_FINGERPRINTS(RAW_FINGERPRINT)
-        VALUES (%s);
+        INSERT INTO RAW_FINGERPRINTS(RAW_FINGERPRINT, FP_COMPONENTS)
+        VALUES (%s, %s);
         """
-        print(insert_query)
-        data = (str(fingerprint),)
+        data = (str(fingerprint),str(components),)
         connection.execute(insert_query, data)
         connection.close()

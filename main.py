@@ -10,6 +10,7 @@ from fingerprint_postgres import FingerprintDBConnection
 
 class FingerprintData(BaseModel):
     fingerprint: str
+    components: str
 
 templates = Jinja2Templates(directory="templates")
 app = FastAPI()
@@ -35,8 +36,7 @@ async def root(request: Request):
 
 @app.post("/fingerprint")
 async def say_hello(data: FingerprintData):
-    print(data.fingerprint)
-    db.save_raw(data.fingerprint)
+    db.save_raw(data.fingerprint, data.components)
     return ""
 
 if __name__ == "__main__":
